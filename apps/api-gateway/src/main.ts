@@ -44,7 +44,7 @@ app.use(limiter);
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
   res.send({ message: 'Welcome to api-gateway!' });
 });
 
