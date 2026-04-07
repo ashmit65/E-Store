@@ -21,6 +21,6 @@ const server = app.listen(port, ()=>{
   console.log(`Auth service is running at http://localhost:${port}/api`)
 })
 
-app.listen(port, host, () => {
-    console.log(`[ ready ] http://${host}:${port}`);
-});
+server.on('error', (err)=>{
+  console.log("Server Error:" , err);
+})
