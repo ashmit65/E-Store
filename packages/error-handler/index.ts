@@ -37,3 +37,24 @@ export class AuthError extends AppError {
         super(message, 401)
     }
 }
+
+// Forbidden Error (for Insufficient Permissions)
+export class ForbiddenError extends AppError {
+    constructor(message = 'Forbidden Access'){
+        super(message, 403)
+    }
+}
+
+// Database Error (For MongoDB/Postgres Errors)
+export class DatabaseError extends AppError {
+    constructor(message = 'Database error', details?:any){
+        super(message, 500, true, details);
+    }
+}
+
+// Rate limiting Error (If user exceeds API Limits) 
+export class RateLimitError extends AppError {
+    constructor(message = 'Too many requests, Please try again later'){
+        super(message, 429)
+    }
+}
