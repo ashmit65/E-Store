@@ -5,11 +5,10 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url = env("DATABASE_URL")
 }
 
 model images {
-  id        String @id @default(auto() @map("_id") @db.ObjectId)
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
   file_id   String
   url       String
   userId    String? @db.ObjectId @unique
@@ -17,11 +16,12 @@ model images {
 }
 
 model users {
-  id        String @id @default(auto() @map("_id") @db.ObjectId)
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   email     String @unique
   password  String
+  following String[]
   avatar    images? 
   createAt  DateTime @default(now())
-  updateAt  DateTime @updateAt
+  updateAt  DateTime @updatedAt
 }

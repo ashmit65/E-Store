@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { errorMiddleware } from '../../../packages/error-handler/error-middleware';
+import { errorMiddleware } from '@estore/error-handler';
 import cookieParser from 'cookie-parser';
 
 const app = express();
