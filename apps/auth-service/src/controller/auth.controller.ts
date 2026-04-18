@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { validateRegistrationData } from "../utils/auth.helper";
+import { checkOtpRestricitons, validateRegistrationData } from "../utils/auth.helper";
 import { ValidationError } from "@estore/error-handler";
 
 
@@ -13,5 +13,6 @@ export const userRegistration = async (req:Request, res: Response, next: NextFun
         return next(new ValidationError("User already exists with this email."))
     }
 
-    await 
+    await checkOtpRestricitons(email, next) ;
+    await trackOtpRequests(email, next);
 }
