@@ -6,7 +6,8 @@ import prisma from "@estore/prisma";
 
 
 export const userRegistration = async (req:Request, res: Response, next: NextFunction) => {
-    validateRegistrationData(req.body, "buyer");
+    try {
+        validateRegistrationData(req.body, "buyer");
     const {name, email} = req.body
 
     const exisitingUser = await prisma.users.findUnique({where: {email}})
@@ -17,10 +18,13 @@ export const userRegistration = async (req:Request, res: Response, next: NextFun
     await checkOtpRestricitons(email, next) ;
     await trackOtpRequests(email, next);
 
-    await sendOtp(name, email, "verification-email");
+    await sendOtp(name, email, "user-activation-mail");
 
     res.status(200).json({
         success: true,
         message: `Please check your email: ${email} to verify your account!`
     })
+    } catch (error) {
+        return next(error);
+    }
 }

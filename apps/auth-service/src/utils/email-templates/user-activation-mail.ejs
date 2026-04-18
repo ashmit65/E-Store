@@ -1,0 +1,107 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activate Your Account - E-Store</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .header {
+            background-color: #111827;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 30px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #2563eb;
+            color: #fff !important;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            E-Store
+        </div>
+
+        <div class="content">
+            <h2>Activate Your Account</h2>
+
+            <p>Hi <strong><%= name %></strong>,</p>
+
+            <p>
+                Thanks for signing up on <strong>E-Store</strong>.
+                You're just one step away from getting started.
+            </p>
+
+            <p>
+                Please click the button below to activate your account:
+            </p>
+
+            <a href="<%= activationLink %>" class="button">
+                Activate Account
+            </a>
+
+            <p style="margin-top: 30px;">
+                If the button doesn’t work, copy and paste this link into your browser:
+            </p>
+
+            <p style="word-break: break-all;">
+                <%= activationLink %>
+            </p>
+
+            <p style="margin-top: 30px;">
+                If you did not create this account, you can safely ignore this email.
+            </p>
+
+            <p>
+                — Team E-Store
+            </p>
+        </div>
+
+        <div class="footer">
+            © <%= new Date().getFullYear() %> E-Store. All rights reserved.
+        </div>
+    </div>
+
+</body>
+</html>
