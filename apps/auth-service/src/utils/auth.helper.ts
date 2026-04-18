@@ -1,6 +1,8 @@
 import { ValidationError } from '@estore/error-handler';
 import crypto from 'crypto';
 import { NextFunction } from 'express';
+import redis from '@estore/redis';
+import { sendMail } from './sendMail';
 
 
 const emailRegex = /^[^\s@]+@[^/s@]+\.[^\s@]+$/;
@@ -41,12 +43,16 @@ export const trackOtpRequests = async(email: string, next: NextFunction) => {
 
     if(otpRequests >= 2) {
         await redis.get(`otp_spam_lock:${email}`, "locked", "EX", 3600) 
+        return next(
+            new ValidationError("Too many OTP requests! Please try again after 1 hour")
+        )
     }
+    await redis.set(otpRequestKey, otpRequests + 1, "EX", 3600)
 }
 
 export const sendOtp = async (name: string, email:string, template: string) => {
     const otp = crypto.randomInt(1000, 9999).toString();
-    await sendEmail(email, "Verify Your Email", template, {name, otp});
+    await sendMail(email, "Verify Your Email", template, {name, otp});
     await redis.set(`OTP:${email}`, otp, 'EX', 300);
     await redis.set(`otp_cooldown:${email}`, 'true', 'EX', 60);
 }

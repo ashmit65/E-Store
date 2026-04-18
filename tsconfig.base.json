@@ -19,7 +19,8 @@
     "target": "es2022",
     "customConditions": ["@estore/source"],
     "paths": {
-      "@estore/error-handler": ["packages/error-handler/index.ts"]
+      "@estore/error-handler": ["packages/error-handler/index.ts"],
+      "@estore/redis": ["packages/lib/redis/index.ts"]
     }
   }
 }

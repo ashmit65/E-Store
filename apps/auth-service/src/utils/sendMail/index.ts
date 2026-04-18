@@ -33,9 +33,9 @@ export const renderTemplate = async (templateName: string, data: Record<string, 
 
 // send an email using nodemailer 
 
-export const sendMail = async (to: string, subject: string, templateString: string, data: Record<string, any>){
+export const sendMail = async (to: string, subject: string, templateString: string, data: Record<string, any>) => {
     try {
-        const html = renderTemplate(templateString, data)
+        const html = await renderTemplate(templateString, data)
 
         await transporter.sendMail({
             from:`<${process.env.SMTP_USER}>`,
@@ -45,7 +45,7 @@ export const sendMail = async (to: string, subject: string, templateString: stri
         })
         return true;
     } catch (error) {
-        console.log('Error sending email' error);
+        console.log('Error sending email', error);
         return false;
     }
 }
