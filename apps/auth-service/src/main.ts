@@ -3,6 +3,9 @@ import cors from 'cors';
 import { errorMiddleware } from '@estore/error-handler';
 import cookieParser from 'cookie-parser';
 import router from './routes/auth.router';
+import swaggerUi from 'swagger-ui-express';
+
+const swaggerDocument = require('./swagger-output.json');
 
 const app = express();
 
@@ -23,6 +26,11 @@ app.get('/', (req, res) => {
 });
 
 app.use("/api", router)
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.get("/docs-json", (req, res) => {
+  res.json(swaggerDocument);
+})
 
 app.use(errorMiddleware)
 
