@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { errorMiddleware } from '@estore/error-handler';
 import cookieParser from 'cookie-parser';
+import router from './routes/auth.router';
 
 const app = express();
 
@@ -20,6 +21,8 @@ app.use(cookieParser());
 app.get('/', (req, res) => {
     res.send({ 'message': 'Hello API'});
 });
+
+app.use("/api", router)
 
 app.use(errorMiddleware)
 
