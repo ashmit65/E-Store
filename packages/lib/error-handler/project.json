@@ -1,0 +1,18 @@
+{
+  "name": "@estore/error-handler-internal",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/lib/error-handler",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/lib/error-handler",
+        "main": "packages/lib/error-handler/index.ts",
+        "tsConfig": "packages/lib/error-handler/tsconfig.json",
+        "assets": []
+      }
+    }
+  }
+}

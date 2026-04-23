@@ -34,10 +34,8 @@ app.set('trust proxy', 1);
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: (req: any) => (req.user ? 1000 : 100),
-  message: {error : "Too many requrests from this IP, Please try again after 15 minutes"},
   standardHeaders : true,
   legacyHeaders : true,
-  keyGenerator: (req: any) => req.ip,
 })
 
 app.use(limiter);
