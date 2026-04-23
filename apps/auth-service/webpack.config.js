@@ -1,5 +1,5 @@
 const { composePlugins, withNx } = require('@nx/webpack');
-const { join } = require('path');
+const { join, resolve } = require('path');
 
 module.exports = composePlugins(withNx(), (config) => {
   // 1. Force Bundling: Remove workspace packages from externals
@@ -19,6 +19,8 @@ module.exports = composePlugins(withNx(), (config) => {
     '@estore/prisma': join(__dirname, '../../packages/lib/prisma/index.ts'),
     '@estore/redis': join(__dirname, '../../packages/lib/redis/index.ts'),
   };
+
+  config.extensions = [".ts",".js",".json"];
 
   // 3. Output configuration
   config.output = {
