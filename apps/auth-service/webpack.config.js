@@ -20,14 +20,13 @@ module.exports = composePlugins(withNx(), (config) => {
     '@estore/redis': join(__dirname, '../../packages/lib/redis/index.ts'),
   };
 
-  config.extensions = [".ts",".js",".json"];
-
-  // 3. Output configuration
-  config.output = {
-    ...config.output,
-    path: join(__dirname, 'dist'),
-    clean: true,
-  };
+  // 3. Resolve configuration
+  config.resolve.extensions = [
+    ...(config.resolve.extensions || []),
+    '.ts',
+    '.js',
+    '.json',
+  ];
 
   return config;
 });
