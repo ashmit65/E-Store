@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
     service: process.env.SMTP_SERVER,
     auth: {
         user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASSWORD
+        pass: process.env.SMTP_PASS
     }
 })
 
@@ -19,13 +19,8 @@ const transporter = nodemailer.createTransport({
 
 export const renderTemplate = async (templateName: string, data: Record<string, any>) => {
     const templatePath = path.join(
-        __dirname,
         process.cwd(),
-        'apps',
-        'auth-service',
-        'src',
-        'utils',
-        'email-templates',
+        'apps/auth-service/src/utils/email-templates',
         `${templateName}.ejs`
     );
     return ejs.renderFile(templatePath, data);

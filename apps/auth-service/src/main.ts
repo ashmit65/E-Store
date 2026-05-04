@@ -14,13 +14,6 @@ import swaggerDocument from './swagger-output.json';
 
 const app = express();
 
-console.log("🛠 [DIAGNOSTIC] CWD:", process.cwd());
-console.log("🛠 [DIAGNOSTIC] .env Load Result:", result.error ? `Failed: ${result.error.message}` : "Success");
-console.log("🛠 [DIAGNOSTIC] REDIS_URL present:", !!process.env.REDIS_DATABASE_URL);
-console.log("🛠 [DIAGNOSTIC] DB_URL present:", !!process.env.DATABASE_URL);
-console.log("🛠 [DIAGNOSTIC] MONGO_URL present:", !!process.env.MONGODB_URL);
-console.log("🛠 [DIAGNOSTIC] ALL REDIS VARS:", Object.keys(process.env).filter(k => k.startsWith('REDIS_')));
-
 app.use(cors({
     origin: ["http://localhost:3000"],
     allowedHeaders: ['Content-Type', 'Authorization'],
