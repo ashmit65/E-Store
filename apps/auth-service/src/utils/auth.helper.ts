@@ -4,7 +4,7 @@ import crypto from "crypto";
 import redis from "@estore/redis";
 import { sendMail } from "./sendMail/index";
 
-const emailRegex = /^[^\s@]+@[^/s@]+\.[^\s@]+$/;
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const validateRegistrationData = (data: any, userType: "buyer" | "seller") => {
     const { name, email, password, phone_number, country } = data;

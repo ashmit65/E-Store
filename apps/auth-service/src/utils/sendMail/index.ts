@@ -21,6 +21,7 @@ export const renderTemplate = async (templateName: string, data: Record<string, 
     const templatePath = path.join(
         __dirname,
         process.cwd(),
+        'apps',
         'auth-service',
         'src',
         'utils',

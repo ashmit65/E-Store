@@ -1,3 +1,9 @@
+import path from 'path';
+import dotenv from 'dotenv';
+
+// Load .env from workspace root explicitly
+const result = dotenv.config({ path: path.resolve(process.cwd(), '.env') });
+
 import express from 'express';
 import cors from 'cors';
 import { errorMiddleware } from '@estore/error-handler-internal';
@@ -7,6 +13,13 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './swagger-output.json';
 
 const app = express();
+
+console.log("🛠 [DIAGNOSTIC] CWD:", process.cwd());
+console.log("🛠 [DIAGNOSTIC] .env Load Result:", result.error ? `Failed: ${result.error.message}` : "Success");
+console.log("🛠 [DIAGNOSTIC] REDIS_URL present:", !!process.env.REDIS_DATABASE_URL);
+console.log("🛠 [DIAGNOSTIC] DB_URL present:", !!process.env.DATABASE_URL);
+console.log("🛠 [DIAGNOSTIC] MONGO_URL present:", !!process.env.MONGODB_URL);
+console.log("🛠 [DIAGNOSTIC] ALL REDIS VARS:", Object.keys(process.env).filter(k => k.startsWith('REDIS_')));
 
 app.use(cors({
     origin: ["http://localhost:3000"],
