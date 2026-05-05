@@ -74,20 +74,24 @@
             </p>
 
             <p>
-                Please click the button below to activate your account:
+                Please use the following One-Time Password (OTP) to activate your account:
             </p>
 
-            <a href="<%= activationLink %>" class="button">
-                Activate Account
-            </a>
+            <div style="background: #f3f4f6; padding: 20px; text-align: center; border-radius: 8px; margin: 20px 0;">
+                <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #111827;">
+                    <%= otp %>
+                </span>
+            </div>
+
+            <p>This code will expire in 5 minutes.</p>
 
             <p style="margin-top: 30px;">
-                If the button doesn’t work, copy and paste this link into your browser:
+                Alternatively, you can click the link below to activate your account automatically:
             </p>
 
-            <p style="word-break: break-all;">
-                <%= activationLink %>
-            </p>
+            <!-- <p style="word-break: break-all;">
+                <a href="<%= activationLink %>" style="color: #2563eb;"><%= activationLink %></a>
+            </p> -->
 
             <p style="margin-top: 30px;">
                 If you did not create this account, you can safely ignore this email.
