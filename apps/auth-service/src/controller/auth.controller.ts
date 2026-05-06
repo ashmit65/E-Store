@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { checkOtpRestricitons, sendOtp, trackOtpRequests, validateRegistrationData } from "../utils/auth.helper";
+import * as bcrypt from "bcryptjs";
+import { checkOtpRestricitons, sendOtp, trackOtpRequests, validateRegistrationData, verifyOtp } from "../utils/auth.helper";
 import { ValidationError } from "@estore/error-handler-internal";
 import prisma from "@estore/prisma";
 
@@ -43,7 +44,26 @@ export const verifyUser = async (req: Request, res: Response, next: NextFunction
             return next(new ValidationError("User already exists with this email."))
         }
 
-        await verifyOtp()
+        await verifyOtp(email, otp, next)
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = await prisma.users.create({
+            data: {
+                name,
+                email,
+                password: hashedPassword
+            }
+        });
+
+        res.status(201).json({
+            success: true,
+            message: "User registered successfully",
+            user: {
+                id: newUser.id,
+                name: newUser.name,
+                email: newUser.email
+            }
+        });
 
     } catch (error) {
         return next(error);
