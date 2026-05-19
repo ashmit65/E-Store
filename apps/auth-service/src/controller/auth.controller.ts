@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import * as bcrypt from "bcryptjs";
 import { checkOtpRestricitons, sendOtp, trackOtpRequests, validateRegistrationData, verifyOtp } from "../utils/auth.helper";
-import { ValidationError } from "@estore/error-handler-internal";
+import { AuthError, ValidationError } from "@estore/error-handler-internal";
 import prisma from "@estore/prisma";
 
 export const userRegistration = async (req: Request, res: Response, next: NextFunction) => {
@@ -66,6 +66,31 @@ export const verifyUser = async (req: Request, res: Response, next: NextFunction
         });
 
     } catch (error) {
+        return next(error);
+    }
+}
+
+// Login user
+export const loginUser = async(req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {email, password} = req.body;
+
+        if(!email || !password) {
+            throw new ValidationError("Email and Password are required.");
+        }
+        const user = await prisma.users.findUnique({where: {email}})
+
+        if (!user) {
+            throw new AuthError("User Doesn't Exists!.")
+        }
+
+        // verify password
+        const isMatch = await bcrypt.compare(password, user.password!);
+        if(!isMatch){
+            throw new AuthError('Invalid Credentials!.');
+        }
+    }
+    catch(error){
         return next(error);
     }
 }
