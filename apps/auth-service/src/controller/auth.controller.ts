@@ -1,3 +1,4 @@
+
 import { NextFunction, Request, Response } from "express";
 import * as bcrypt from "bcryptjs";
 import { checkOtpRestricitons, sendOtp, trackOtpRequests, validateRegistrationData, verifyOtp } from "../utils/auth.helper";
@@ -89,6 +90,23 @@ export const loginUser = async(req: Request, res: Response, next: NextFunction) 
         if(!isMatch){
             throw new AuthError('Invalid Credentials!.');
         }
+
+        // Generate JWT token
+        const accessToken = jwt.sign({id: user.id, role: "user"},
+            process.env.ACCESS_TOKEN_SECRET as string,
+        {
+            expiresIn: "30m",
+        }
+        )
+
+        // Generate refresh token
+        const refreshToken = jwt.sign({id: user.id},
+            process.env.ACCESS_REFRESH_SECRET as string,
+            {
+                expiresIn: "7d",
+            }
+        )
+        
     }
     catch(error){
         return next(error);
