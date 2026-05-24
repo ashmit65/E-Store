@@ -1,6 +1,6 @@
 import { Response } from "express";
 
-export const setCookies = async(res: Response, name: string, value: string) {
+export const setCookies = async(res: Response, name: string, value: string) => {
     res.cookie(name, value, {
         httpOnly: true,
         secure: true,

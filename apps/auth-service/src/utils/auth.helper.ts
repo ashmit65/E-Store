@@ -1,4 +1,3 @@
-import { NextFunction } from "express";
 import { ValidationError } from "@estore/error-handler-internal";
 import crypto from "crypto";
 import redis from "@estore/redis";

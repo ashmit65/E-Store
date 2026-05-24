@@ -4,6 +4,8 @@ import * as bcrypt from "bcryptjs";
 import { checkOtpRestricitons, sendOtp, trackOtpRequests, validateRegistrationData, verifyOtp } from "../utils/auth.helper";
 import { AuthError, ValidationError } from "@estore/error-handler-internal";
 import prisma from "@estore/prisma";
+import jwt from "jsonwebtoken"
+import { setCookies } from "../utils/cookies/setCookies";
 
 export const userRegistration = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -106,6 +108,15 @@ export const loginUser = async(req: Request, res: Response, next: NextFunction) 
                 expiresIn: "7d",
             }
         )
+
+        // store the refresh and access token in an httpOnly secure cookie
+        setCookies(res, "accessToken", accessToken)
+        setCookies(res, "refreshToken", refreshToken)
+
+        res.status(200).json({
+            message: "Login successful!",
+            user: { id: user.id, email: user.email, name: user.name },
+        })
         
     }
     catch(error){
