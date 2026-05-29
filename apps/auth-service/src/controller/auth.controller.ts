@@ -130,3 +130,34 @@ export const userForgotPassword = async(req: Request, res: Response, next: NextF
 }
 
 // Reset User password
+export const resetUserPassword = async(req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {email, newPassword} = req.body;
+
+        if(!email || !newPassword)
+            return next(new ValidationError("Email and new Password are required."))
+
+        const user = await prisma.users.findUnique({where: {email}})
+
+        if(!user) 
+            return next(new ValidationError("User Not Found!"));
+
+        //compare new password with the exisiting one
+        const isSamePassword = await bcrypt.compare(newPassword, user.password!);
+        if(isSamePassword)
+            return next(new ValidationError("New password cannot be same as old password."))
+
+        // hash the new password
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        
+        await prisma.users.update({where:{email}, data:{password: hashedPassword}});
+
+        res.status(200).json({
+            success: true,
+            message: "Password reset successful!"
+        });
+    } catch(error) {
+        next(error);
+    }
+}
