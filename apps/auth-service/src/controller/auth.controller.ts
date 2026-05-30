@@ -1,7 +1,7 @@
 
 import { NextFunction, Request, Response } from "express";
 import * as bcrypt from "bcryptjs";
-import { checkOtpRestricitons, handleForgetPassword, sendOtp, trackOtpRequests, validateRegistrationData, verifyOtp } from "../utils/auth.helper";
+import { checkOtpRestricitons, handleForgetPassword, sendOtp, trackOtpRequests, validateRegistrationData, verifyForgetPassowrdOtp, verifyOtp } from "../utils/auth.helper";
 import { AuthError, ValidationError } from "@estore/error-handler-internal";
 import prisma from "@estore/prisma";
 import jwt from "jsonwebtoken"
@@ -127,6 +127,11 @@ export const loginUser = async(req: Request, res: Response, next: NextFunction) 
 // user forgot password 
 export const userForgotPassword = async(req: Request, res: Response, next: NextFunction)=>{
     await handleForgetPassword(req, res, next, "buyer");
+}
+
+//Verify forget password OTP
+export const verifyUserForgetPassword = async(req: Request, res: Response, next: NextFunction) => {
+    await verifyForgetPassowrdOtp(req, res, next)
 }
 
 // Reset User password
