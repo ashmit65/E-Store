@@ -50,3 +50,7 @@ test-output
 
 .env
 ARCHITECTURE.md
+
+# Next.js
+.next
+out
