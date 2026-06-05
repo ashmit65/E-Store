@@ -17,7 +17,10 @@ module.exports = {
 //     ...createGlobPatternsForDependencies(__dirname)
   ],
   theme: {
-    extend: {},
+    extend: {
+      Roboto: ["var(--font-roboto)"],
+      Poppins: ["var(--font-poppins)"]
+    },
   },
   plugins: [],
 };
