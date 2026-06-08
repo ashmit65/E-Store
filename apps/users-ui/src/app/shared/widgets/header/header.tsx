@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import React from 'react';
 import { Search } from 'lucide-react';
+import ProfileIcon from '../../../assets/svgs/profile-icon';
+import HeartIcon from '../../../assets/svgs/heart-icon';
 
 const Header = () => {
     return (
@@ -18,6 +20,26 @@ const Header = () => {
                     <div className='w-[60px] cursor-pointer flex items-center justify-center h-full bg-[#3489ff] absolute top-0 right-0 rounded-r-lg'>
                         <Search color = "#ffff"/>
                     </div>
+                </div>
+                <div className='flex items-center gap-8'>
+                    <div className="flex items-center gap-2">
+                        <Link href={"/login"}
+                        className='border-2 w-[50px] h-[50px] flex items-center justify-center rounded-full border-[#010f1c1a]'>
+                            <ProfileIcon />
+                        </Link>
+                    </div>
+                    <Link href={"/login"}>
+                        <span className='block font-medium'>Hello,</span>
+                        <span className='font-semibold'>Sign In</span>
+                    </Link>
+                </div>
+                <div className='flex items-center gap-5'>
+                    <Link href={'/wishlist'} className='relative'>
+                        <HeartIcon/>
+                        <div className='w-6 h-6 border-2 border-white bg-red-500 rounded-full flex items-center justify-center absolute top-[-10px] right-[-10px] text-white text-[12px] font-medium'>
+                            0
+                        </div>
+                    </Link>
                 </div>
             </div>
         </div>
