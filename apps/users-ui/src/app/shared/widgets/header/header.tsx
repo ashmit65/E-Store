@@ -3,6 +3,8 @@ import React from 'react';
 import { Search } from 'lucide-react';
 import ProfileIcon from '../../../assets/svgs/profile-icon';
 import HeartIcon from '../../../assets/svgs/heart-icon';
+import CartIcon from '../../../assets/svgs/cart-icon';
+import HeaderBottom from './header-bottom';
 
 const Header = () => {
     return (
@@ -36,12 +38,20 @@ const Header = () => {
                 <div className='flex items-center gap-5'>
                     <Link href={'/wishlist'} className='relative'>
                         <HeartIcon/>
-                        <div className='w-6 h-6 border-2 border-white bg-red-500 rounded-full flex items-center justify-center absolute top-[-10px] right-[-10px] text-white text-[12px] font-medium'>
-                            0
+                        <div className='w-5 h-5 border-2 border-white bg-red-400 rounded-full flex items-center justify-center absolute top-[-10px] right-[-10px] text-white text-[12px] font-medium'>
+                            <span className='text-white font-medium text-xs'>0</span>
+                        </div>
+                    </Link>
+                    <Link href={'/cart'} className='relative'>
+                        <CartIcon/>
+                        <div className='w-5 h-5 border-2 border-white bg-red-400 rounded-full flex items-center justify-center absolute top-[-10px] right-[-10px] text-white text-[12px] font-medium'>
+                            <span className='text-white font-medium text-xs'>0</span>
                         </div>
                     </Link>
                 </div>
             </div>
+            <div className='border-b border-b-[#99999999]'/>
+                <HeaderBottom/>
         </div>
     )
 }
