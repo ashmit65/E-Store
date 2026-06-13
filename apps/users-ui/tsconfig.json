@@ -39,7 +39,7 @@
     "../../apps/users-ui/.next/types/**/*.ts",
     "../../dist/apps/users-ui/.next/types/**/*.ts",
     "next-env.d.ts"
-  ],
+, "src/app/(routes)/login/page.tsxx"  ],
   "exclude": [
     "out-tsc",
     "dist",
