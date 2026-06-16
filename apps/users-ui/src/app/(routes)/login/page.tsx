@@ -4,6 +4,7 @@ import {useForm} from 'react-hook-form';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import GoogleSVG from 'apps/users-ui/src/shared/components/google-button';
+import { Eye, EyeOff } from 'lucide-react';
 
 type FormData = {
     email: string;
@@ -64,7 +65,30 @@ const Login = () => {
                         {errors.email && (
                             <p className='text-red-500 text-sm'>{String(errors.email.message)}</p>
                         )}
-                        
+
+                        <label className='block text-gray-700 mb-1'>Password</label>
+                        <div className="relative">
+                            <input type={passwordVisible? "text" : "password"}
+                        placeholder='Min. 6 characters'
+                        className='w-full p-2 border border-gray-300 outline-0 rounded mb-1'
+                        {...register('password', {
+                            required: "Password is required",
+                            pattern: {
+                                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+                                message: "Invalid password format"
+                            }
+                        })}
+                        />
+
+                        <button type='button' onClick={()=> setPasswordVisible(!passwordVisible)}
+                            className='absolute inset-y-0 right-3 flex items-center text-gray-400'
+                            >
+                                {passwordVisible? <Eye/> : <EyeOff/> }
+                            </button>
+                        </div>
+                        {errors.password && (
+                            <p className='text-red-500 text-sm'>{String(errors.password.message)}</p>
+                        )}
                     </form>
                 </div>
             </div>
