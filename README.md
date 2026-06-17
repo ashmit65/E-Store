@@ -6,6 +6,24 @@ A microservices-based backend for an E-commerce platform, built using the [Nx](h
 
 This project uses a microservices architecture to manage different domains of the e-commerce platform efficiently.
 
+### Request Flow Diagram
+
+```mermaid
+graph TD
+    Client["Users UI Client (Next.js - Port 3000)"]
+    Gateway["API Gateway (Express - Port 8080)"]
+    AuthService["Auth Service (Express - Port 6001)"]
+    Redis["Upstash Redis Cache (OTP / Cooldowns)"]
+    DB["MongoDB Database (via Prisma Client)"]
+    SMTP["Gmail SMTP Server (Nodemailer Email)"]
+
+    Client -->|Sends HTTP Requests| Gateway
+    Gateway -->|Routes & Rate Limits| AuthService
+    AuthService -->|Generates/Verifies OTP| Redis
+    AuthService -->|Persists User Accounts| DB
+    AuthService -->|Dispatches Activation Mails| SMTP
+```
+
 ### Current Services
 
 1. **API Gateway (`api-gateway`)** - Port **8080**
@@ -13,13 +31,17 @@ This project uses a microservices architecture to manage different domains of th
    - Configured with CORS, rate limiting, and will handle request proxying to internal microservices.
 2. **Auth Service (`auth-service`)** - Port **6001**
    - Dedicated microservice to handle user authentication, user accounts, and authorization logic.
+3. **Users UI (`users-ui`)** - Port **3000**
+   - Frontend application built with Next.js (App Router), React, and Tailwind CSS.
 
 ## 🛠️ Tech Stack
 
-- **Runtime & Frameworks:** Node.js, Express.js
+- **Frontend:** Next.js (App Router), React, Tailwind CSS
+- **Backend Frameworks:** Node.js, Express.js
+- **Database & Cache:** MongoDB (via Prisma ORM), Redis (Upstash)
 - **Language:** TypeScript
 - **Monorepo Management:** Nx
-- **Bundling:** esbuild
+- **Bundling:** Webpack, esbuild
 - **Testing:** Jest
 
 ## 🚀 Getting Started
