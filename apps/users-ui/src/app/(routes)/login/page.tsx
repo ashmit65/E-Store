@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from 'next/navigation';
-import {useForm} from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import GoogleSVG from 'apps/users-ui/src/shared/components/google-button';
@@ -17,10 +17,10 @@ const Login = () => {
     const [rememberMe, setRememberMe] = useState(false);
     const router = useRouter();
 
-    const {register, handleSubmit, formState:{errors}} = useForm<FormData>();
+    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 
-    const onSubmit = (data:FormData) => {
-        
+    const onSubmit = (data: FormData) => {
+
     }
     return (
         <div className='w-full py-10 min-h-[85vh] bg-[#f1f1f1]'>
@@ -52,15 +52,15 @@ const Login = () => {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <label className='block text-gray-700 mb-1'>Email</label>
                         <input type="email"
-                        placeholder='ashmits554@gmail.com'
-                        className='w-full p-2 border border-gray-300 outline-0 rounded mb-1'
-                        {...register('email', {
-                            required: "Email is required",
-                            pattern: {
-                                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                message: "Invalid email format"
-                            }
-                        })}
+                            placeholder='ashmits554@gmail.com'
+                            className='w-full p-2 border border-gray-300 outline-0 rounded mb-1'
+                            {...register('email', {
+                                required: "Email is required",
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: "Invalid email format"
+                                }
+                            })}
                         />
                         {errors.email && (
                             <p className='text-red-500 text-sm'>{String(errors.email.message)}</p>
@@ -68,26 +68,44 @@ const Login = () => {
 
                         <label className='block text-gray-700 mb-1'>Password</label>
                         <div className="relative">
-                            <input type={passwordVisible? "text" : "password"}
-                        placeholder='Min. 6 characters'
-                        className='w-full p-2 border border-gray-300 outline-0 rounded mb-1'
-                        {...register('password', {
-                            required: "Password is required",
-                            pattern: {
-                                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-                                message: "Invalid password format"
-                            }
-                        })}
-                        />
+                            <input type={passwordVisible ? "text" : "password"}
+                                placeholder='Min. 6 characters'
+                                className='w-full p-2 border border-gray-300 outline-0 rounded mb-1'
+                                {...register('password', {
+                                    required: "Password is required",
+                                    pattern: {
+                                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+                                        message: "Invalid password format"
+                                    }
+                                })}
+                            />
 
-                        <button type='button' onClick={()=> setPasswordVisible(!passwordVisible)}
-                            className='absolute inset-y-0 right-3 flex items-center text-gray-400'
+                            <button type='button' onClick={() => setPasswordVisible(!passwordVisible)}
+                                className='absolute inset-y-0 right-3 flex items-center text-gray-400'
                             >
-                                {passwordVisible? <Eye/> : <EyeOff/> }
+                                {passwordVisible ? <Eye /> : <EyeOff />}
                             </button>
+                            {errors.password && (
+                                <p className='text-red-500 text-sm'>{String(errors.password.message)}</p>
+                            )}
                         </div>
-                        {errors.password && (
-                            <p className='text-red-500 text-sm'>{String(errors.password.message)}</p>
+                        <div className='flex justify-between items-center my-4'>
+                            <label className='flex items-center text-gray-600'>
+                                <input type="checkbox" className='mr-2' checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} />
+                                Remember me
+                            </label>
+                            <Link href={"/forgot-password"} className='text-blue-500 text-sm'>Forgot Password</Link>
+                        </div>
+
+                        <button type='submit'
+                            className='w-full text-lg cursor-pointer bg-black text-white py-2 rounded-lg'
+                        >Login
+                        </button>
+
+                        {serverError && (
+                            <p className='text-red-600 mt-2 text-center text-sm'>
+                                * {serverError}
+                            </p>
                         )}
                     </form>
                 </div>
