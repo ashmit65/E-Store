@@ -26,8 +26,9 @@ const HeaderBottom = () => {
     }, [])
 
     return (
-        <div className={`w-full transition-all duration-300 ${isSticky ? "fixed top-0 left-0 z-[100] bg-white shadow-lg" : "relative"}`}>
-            <div className={`w-[80%] relative m-auto flex items-center justify-between ${isSticky ? "pt-3" : "py-0"}`}>
+        <div className="h-[50px] relative w-full">
+            <div className={`w-full transition-all duration-300 ${isSticky ? "fixed top-0 left-0 z-[100] bg-white shadow-lg" : "relative"}`}>
+                <div className={`w-[80%] relative m-auto flex items-center justify-between ${isSticky ? "pt-3" : "py-0"}`}>
                 {/* All DropDown */}
                 <div className={`w-[260px] ${isSticky && '-mb-2'} cursor-pointer flex items-center justify-between px-5 h-[50px] bg-[#3489ff]`}
                     onClick={() => setShow(!show)}
@@ -57,8 +58,8 @@ const HeaderBottom = () => {
 
                 <div>
                     {isSticky && (
-                        <div>
-                            <div className='flex items-center gap-8 pb-2'>
+                        <div className="flex items-center gap-8">
+                            <div className='flex items-center gap-8'>
                     <div className="flex items-center gap-2">
                         <Link href={"/login"}
                             className='border-2 w-[50px] h-[50px] flex items-center justify-center rounded-full border-[#010f1c1a]'>
@@ -89,6 +90,7 @@ const HeaderBottom = () => {
                 </div>
 
             </div>
+        </div>
         </div>
     )
 }
