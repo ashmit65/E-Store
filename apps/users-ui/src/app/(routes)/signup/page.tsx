@@ -16,7 +16,6 @@ type FormData = {
 
 const Signup = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
-    const [serverError, setServerError] = useState<string | null>(null);
     const [showOtp, setShowOtp ] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const [canSend, setCanSend] = useState(true);
@@ -57,6 +56,22 @@ const Signup = () => {
             setCanResend(false),
             setTimer(60);
             startResendTimer()
+        }
+    })
+
+    const verifyOtpMutation = useMutation({
+        mutationFn: async() => {
+            if(!userData) return;
+            const response = await axios.post(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/api/verify-user`,
+                {
+                    ...userData,
+                    otp: otp.join(""),
+                }
+            );
+        },
+        onSuccess:() =>{
+            router.push("/login");
         }
     })
 
@@ -184,11 +199,7 @@ const handleResendOtp = () => {
                         >{signupMutation.isPending ? "Singing up...": "Signup"}
                         </button>
 
-                        {serverError && (
-                            <p className='text-red-600 mt-2 text-center text-sm'>
-                                * {serverError}
-                            </p>
-                        )}
+                        
                     </form>
                     ): (
                         <div>
@@ -206,8 +217,11 @@ const handleResendOtp = () => {
                                    /> 
                                 ))}
                             </div>
-                            <button className='w-full text-lg cursor-pointer bg-black mt-4 text-white py-2 rounded-lg' type='submit'>
-                                Verify OTP
+                            <button className='w-full text-lg cursor-pointer bg-black mt-4 text-white py-2 rounded-lg' type='submit'
+                            disabled={verifyOtpMutation.isPending}
+                            onClick={()=>verifyOtpMutation.mutate()}
+                            >
+                                {verifyOtpMutation.isPending ? "Verifying...": "Verify OTP"}
                             </button>
                             <p className='text-center text-gray-500 text-sm mt-4'>
                                 {canResend ? (
@@ -218,6 +232,15 @@ const handleResendOtp = () => {
                                     `Resend OTP in ${timer}s`
                                 )}
                             </p>
+                            {verifyOtpMutation?.isError &&
+                            verifyOtpMutation.error instanceof AxiosError && (
+                                <p className='text-red-600 mt-2 text-center text-sm'>
+                                    {verifyOtpMutation.error.response?.data?.message || 
+                                        verifyOtpMutation.error.message
+                                    }
+                                </p>
+                            )
+                            }
                         </div>
                     )}
                 </div>
