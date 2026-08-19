@@ -40,6 +40,12 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
+app.use('/api', porxy('http://localhost:6001', {
+  proxyReqPathResolver: (req) => {
+    return `/api${req.url}`;
+  }
+}));
+
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.get('/', (req, res) => {
