@@ -8,6 +8,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { useMutation } from '@tanstack/react-query';
 import axios, {Axios, AxiosError} from 'axios';
 
+// Form data types for the signup page
 type FormData = {
     name: string;
     email: string;
