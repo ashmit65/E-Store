@@ -58,6 +58,15 @@ graph TD
    npm install
    ```
 
+### Environment Setup
+
+Before running the application, you need to configure your environment variables. 
+Create a `.env` file in the `apps/users-ui` directory for frontend configuration, and `.env` files for your backend services (like `auth-service` and `api-gateway`) as required by the Prisma schema and other services. Example keys you may need:
+- `DATABASE_URL` (MongoDB connection string)
+- `SMTP_...` credentials for Nodemailer
+- Redis credentials for Upstash
+- JWT secrets for auth
+
 ### Running the Environment Local
 
 You can start all microservices concurrently using the existing root script:
@@ -77,6 +86,12 @@ npx nx serve api-gateway
 or 
 ```sh
 npx nx serve auth-service
+```
+
+To run the frontend (Users UI) individually, you can use:
+
+```sh
+npm run users-ui
 ```
 
 ## 🧪 Testing
